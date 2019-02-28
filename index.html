@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>My Geocode App</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="formatted-address"></div>
+    </div>
+
+    <script>
+      //call geocode
+      geocode();
+
+      function geocode() {
+        var location = "I-44 Poonam Sagar Complex Mira Road Maharashtra";
+        axios
+          .get("https://maps.googleapis.com/maps/api/geocode/json", {
+            params: {
+              address: location,
+              key: "AIzaSyCBTuqVRWNnAxcSLbP8vVjAJ4zVLTL2Bs0"
+            }
+          })
+          .then(function(response) {
+            // log full response
+            console.log(response);
+            // formated address
+            var formattedAddress = response.data.results[0].formatted_address;
+            var formattedAddressOutput = `
+            <ul class='list-group'>
+            <li class='list-group-item'>${formattedAddress}</li>
+            </ul>
+            `;
+
+            //address components
+            
+
+            // output to app
+            document.getElementById(
+              "formatted-address"
+            ).innerHTML = formattedAddressOutput;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    </script>
+  </body>
+</html>
